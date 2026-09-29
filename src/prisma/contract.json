@@ -1,0 +1,475 @@
+{
+  "schemaVersion": "1",
+  "targetFamily": "sql",
+  "target": "postgres",
+  "profileHash": "3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2",
+  "roots": {
+    "leads": {
+      "model": "Lead",
+      "namespace": "public"
+    }
+  },
+  "domain": {
+    "namespaces": {
+      "public": {
+        "enum": {
+          "AiStatus": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "PENDING",
+                "value": "PENDING"
+              },
+              {
+                "name": "COMPLETED",
+                "value": "COMPLETED"
+              },
+              {
+                "name": "FAILED",
+                "value": "FAILED"
+              },
+              {
+                "name": "FALLBACK",
+                "value": "FALLBACK"
+              }
+            ]
+          },
+          "LeadIntent": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "SALES",
+                "value": "SALES"
+              },
+              {
+                "name": "UNKNOWN",
+                "value": "UNKNOWN"
+              }
+            ]
+          },
+          "LeadPriority": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "LOW",
+                "value": "LOW"
+              },
+              {
+                "name": "MEDIUM",
+                "value": "MEDIUM"
+              },
+              {
+                "name": "HIGH",
+                "value": "HIGH"
+              }
+            ]
+          },
+          "LeadSource": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "LANDING_PAGE",
+                "value": "LANDING_PAGE"
+              }
+            ]
+          }
+        },
+        "models": {
+          "Lead": {
+            "fields": {
+              "aiErrorMessage": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "aiIntent": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "LeadIntent",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
+              "aiPriority": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "LeadPriority",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
+              "aiStatus": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "AiStatus",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
+              "aiSummary": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "email": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "message": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "source": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "LeadSource",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
+              "updatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "aiErrorMessage": {
+                  "column": "ai_error_message"
+                },
+                "aiIntent": {
+                  "column": "ai_intent"
+                },
+                "aiPriority": {
+                  "column": "ai_priority"
+                },
+                "aiStatus": {
+                  "column": "ai_status"
+                },
+                "aiSummary": {
+                  "column": "ai_summary"
+                },
+                "createdAt": {
+                  "column": "created_at"
+                },
+                "email": {
+                  "column": "email"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "message": {
+                  "column": "message"
+                },
+                "name": {
+                  "column": "name"
+                },
+                "source": {
+                  "column": "source"
+                },
+                "updatedAt": {
+                  "column": "updated_at"
+                }
+              },
+              "namespaceId": "public",
+              "table": "leads"
+            }
+          }
+        }
+      }
+    }
+  },
+  "storage": {
+    "namespaces": {
+      "public": {
+        "entries": {
+          "table": {
+            "leads": {
+              "checks": [
+                {
+                  "expression": "\"ai_intent\" IN ('SALES', 'UNKNOWN')",
+                  "name": "leads_ai_intent_check_263a2464",
+                  "prefix": "leads_ai_intent_check"
+                },
+                {
+                  "expression": "\"ai_priority\" IN ('LOW', 'MEDIUM', 'HIGH')",
+                  "name": "leads_ai_priority_check_88e98ab4",
+                  "prefix": "leads_ai_priority_check"
+                },
+                {
+                  "expression": "\"ai_status\" IN ('PENDING', 'COMPLETED', 'FAILED', 'FALLBACK')",
+                  "name": "leads_ai_status_check_0b3cb2fa",
+                  "prefix": "leads_ai_status_check"
+                },
+                {
+                  "expression": "\"source\" IN ('LANDING_PAGE')",
+                  "name": "leads_source_check_f1e1e4c9",
+                  "prefix": "leads_source_check"
+                }
+              ],
+              "columns": {
+                "ai_error_message": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": true
+                },
+                "ai_intent": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": true,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "LeadIntent",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "ai_priority": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": true,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "LeadPriority",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "ai_status": {
+                  "codecId": "pg/text@1",
+                  "default": {
+                    "kind": "literal",
+                    "value": "PENDING"
+                  },
+                  "nativeType": "text",
+                  "nullable": false,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "AiStatus",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "ai_summary": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": true
+                },
+                "created_at": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                },
+                "email": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "message": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "name": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "source": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "LeadSource",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "updated_at": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
+            }
+          },
+          "valueSet": {
+            "AiStatus": {
+              "kind": "valueSet",
+              "values": [
+                "PENDING",
+                "COMPLETED",
+                "FAILED",
+                "FALLBACK"
+              ]
+            },
+            "LeadIntent": {
+              "kind": "valueSet",
+              "values": [
+                "SALES",
+                "UNKNOWN"
+              ]
+            },
+            "LeadPriority": {
+              "kind": "valueSet",
+              "values": [
+                "LOW",
+                "MEDIUM",
+                "HIGH"
+              ]
+            },
+            "LeadSource": {
+              "kind": "valueSet",
+              "values": [
+                "LANDING_PAGE"
+              ]
+            }
+          }
+        },
+        "id": "public",
+        "kind": "postgres-schema"
+      }
+    },
+    "storageHash": "ff3df65b95ca0e38f77a86b5c86d89961c364c6aaed7d2f56a43a7c275f16b71"
+  },
+  "execution": {
+    "executionHash": "38981688e9f4d1df3efd4c462f832b24724445f277f36328b1166242a0173cf8",
+    "mutations": {
+      "defaults": [
+        {
+          "onCreate": {
+            "id": "instantNow",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "leads",
+            "field": "created_at",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "uuidv4",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "leads",
+            "field": "id",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "instantNow",
+            "kind": "generator"
+          },
+          "onUpdate": {
+            "id": "instantNow",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "leads",
+            "field": "updated_at",
+            "namespace": "public"
+          }
+        }
+      ]
+    }
+  },
+  "capabilities": {
+    "postgres": {
+      "distinctOn": true,
+      "jsonAgg": true,
+      "lateral": true,
+      "limit": true,
+      "orderBy": true,
+      "returning": true
+    },
+    "sql": {
+      "checkConstraint": true,
+      "defaultInInsert": true,
+      "enums": true,
+      "insertOnConflictSkip": true,
+      "insertOnConflictWithoutTarget": true,
+      "lateral": true,
+      "returning": true,
+      "scalarList": true
+    }
+  },
+  "extensions": {},
+  "meta": {},
+  "_generated": {
+    "warning": "⚠️  GENERATED FILE - DO NOT EDIT",
+    "message": "This file is automatically generated by \"prisma contract emit\".",
+    "regenerate": "To regenerate, run: prisma contract emit"
+  }
+}

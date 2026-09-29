@@ -1,0 +1,39 @@
+// use prisma-8
+enum LeadSource {
+  LANDING_PAGE
+}
+
+enum LeadIntent {
+  SALES
+  UNKNOWN
+}
+
+enum LeadPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum AiStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  FALLBACK
+}
+
+model Lead {
+  id             String               @id @default(uuid())
+  name           String
+  email          String
+  message        String
+  source         LeadSource
+  aiIntent       LeadIntent?          @map("ai_intent")
+  aiPriority     LeadPriority?        @map("ai_priority")
+  aiSummary      String?              @map("ai_summary")
+  aiStatus       AiStatus             @default(PENDING) @map("ai_status")
+  aiErrorMessage String?              @map("ai_error_message")
+  createdAt      temporal.createdAt() @map("created_at")
+  updatedAt      temporal.updatedAt() @map("updated_at")
+
+  @@map("leads")
+}

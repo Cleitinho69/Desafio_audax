@@ -1,0 +1,41 @@
+{
+  "name": "desafio_audax",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@prisma/cli-engine": "0.6.2",
+    "@types/bun": "latest",
+    "@types/node": "^26.6.3",
+    "prisma": "^8.0.0-rc.19"
+  },
+  "scripts": {
+    "start": "bun ./src/index.ts",
+    "postinstall": "prisma skills sync || exit 0",
+    "db:contract": "prisma contract emit",
+    "db:init": "prisma db init",
+    "db:format": "prisma contract format",
+    "db:infer": "prisma contract infer",
+    "db:update": "prisma db update",
+    "db:verify": "prisma db verify",
+    "db:migration:plan": "prisma migration plan",
+    "db:migration:new": "prisma migration new",
+    "db:migration:show": "prisma migration show",
+    "db:migration:list": "prisma migration list",
+    "db:migration:status": "prisma migration status",
+    "db:migration:log": "prisma migration log",
+    "db:migration:graph": "prisma migration graph",
+    "db:migration:check": "prisma migration check",
+    "db:migrate": "prisma db migrate"
+  },
+  "peerDependencies": {
+    "typescript": "^7"
+  },
+  "dependencies": {
+    "@google/genai": "^2.24.0",
+    "@hono/zod-validator": "^0.9.1",
+    "@prisma/client": "^7.10.0",
+    "@prisma/orm-postgres": "^8.0.0-rc.13",
+    "dotenv": "^18.0.4",
+    "zod": "^4.6.5"
+  }
+}
